@@ -6,5 +6,5 @@ LIBFT
 -----------------------------------------
 
 thank's: smikayel, azakarya, sulikhan
-dmkhitae
+dmkhitar
 -----------------------------------------
