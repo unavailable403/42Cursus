@@ -1,25 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/18 20:12:19 by ergrigor          #+#    #+#             */
+/*   Updated: 2022/03/18 20:12:19 by ergrigor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*new_str;
-	size_t	i;
-	size_t	j;
+	char	*ptr;
+	size_t	index;
+	size_t	slen;
 
-	i = 0;
-	j = 0;
-	new_str = (char *)malloc(len + 1);
-	if (!new_str)
-		return (NULL);
-	while (s[i])
+	index = 0;
+	if (ft_strlen(s) < start)
 	{
-		if (j < len && start <= i)
-		{
-			new_str[j] = s[i];
-			++j;
-		}
-		i++;
+		ptr = malloc(sizeof(char));
+		ptr[0] = '\0';
+		return (ptr);
 	}
-	new_str[j] = 0;
-	return (new_str);
+	slen = ft_strlen(s + start);
+	if (slen < len)
+		len = slen;
+	ptr = (char *)malloc(len);
+	if (!ptr)
+		return (0);
+	while (index < len)
+	{
+		ptr[index] = s[start];
+		start++;
+		index++;
+	}
+	ptr[index] = '\0';
+	return (ptr);
 }
