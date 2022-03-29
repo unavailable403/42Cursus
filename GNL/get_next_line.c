@@ -6,18 +6,16 @@ char    *ft_getline(char *buff)
     char *line;
 
     i = 0;
-   // if (!buff)
-    
-    while (buff && (buff[i++] != '\n' && buff[i] != '\0'))
+    while (buff && (buff[i] != '\n' && buff[i] != '\0'))
         i++;
     line = malloc(i + 2);
-    if(!line)
+    if(!buff || !line)
         return (NULL);
     i = 0;
-    while (buff && (buff[i] != '\n' && buff[i] != '\0'))
+    while (buff[i] != '\n' && buff[i] != '\0')
     {
         line[i] = buff[i];
-        i++;
+        ++i;
     }
     line[i] = '\n';
     line[i + 1] = 0;
@@ -26,84 +24,97 @@ char    *ft_getline(char *buff)
 
 char    *ft_getbuff(char *buff)
 {
-    if (!buff)
-        return (NULL);
     char *newbuff;
     size_t  i;
     size_t  j;
-    size_t len;
+    // size_t len;
     i = 0;
+    if (!buff)
+        return (NULL);
     while (buff[i] != '\n' && buff[i] != '\0')
         i++;
-    j = i;
-    if(buff[i] == '\n')
-        while (buff[j])
-            j++;
-    newbuff = malloc(j - i + 1);
+    if(!buff[i])
+    {
+        free(buff);
+        return NULL;
+    }
+    // j = i;
+    // if(buff[i] == '\n')
+    //     while (buff[j])
+    //         j++;
+    newbuff = malloc(ft_strlen(buff) - i + 1);
     if (!newbuff)
         return NULL;
-    len = j - i;
-    newbuff[len] = 0;
-    while (len)
-    {
-        len--;
-        newbuff[len] = buff[j];
-        j--;
-    }
-    printf("\n newbuff \n---------------------\n%s\n-----------------------------", newbuff);
+    ++i;
+    j = 0;
+    while (buff[i])
+        newbuff[j++] = buff[i++];
+    newbuff[j] = 0;
     free(buff);
     return (newbuff);
 }
 
-// char *ft_getminusbuff(char *buff)
-// {
-//     size_t i;
-//     while (/* condition */)
-//     {
-//         /* code */
-//     }
-    
-// }
 
 char    *get_next_line(int fd)
 {
     static char *buff;
     char        *line;
     char        *tmp;
-    size_t      i;
     int         flag;
 
-    i = -1;
+    if(fd < 0 || fd > 65536)
+        return NULL;
     tmp = malloc(BUFFER_SIZE + 1);
     if (!tmp)
         return (NULL);
-    while (flag != 0)
+    while (1)
     {
         flag = read(fd, tmp, BUFFER_SIZE);
+        if (flag <= 0)
+            break;
         tmp[flag] = 0;
         buff = ft_strjoin(buff, tmp);
-        //printf("%s", buff);
-        if(ft_memchr(tmp, '\0', flag) || ft_memchr(tmp, '\n', flag))
+        if(ft_memchr(buff, '\n'))
             break;
+    }
+    free(tmp);
+    if(flag < 0)
+    {
+        free(buff);
+        return NULL;
     }
     line = ft_getline(buff);
     //printf("\n%s\n", buff);
     buff = ft_getbuff(buff);
+    if(!flag && !line)
+    {
+        free(buff);
+        return NULL;
+    }
     return (line);
 }
 
-int main(){
-    char *line;
-    int fd;
+// int main(){
+//    char *line;
+//    int fd;
 
-    fd = open("t.txt", O_RDONLY);
-    // while ((line = get_next_line(fd)))
-    //      printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    line = get_next_line(fd);
-    printf("%s", line);
-    return 0;
-}
+//    fd = open("empty", O_RDONLY);
+//    while ((line = get_next_line(fd)))
+//         printf("%s", line);
+// //    line = get_next_line(fd);
+// //    printf("line->%s<-", line);
+//    free(line);
+// //    line = get_next_line(fd);
+// //    printf("line->%s", line);
+// // while ((line = get_next_line(fd)))
+// // {
+// //     printf("line[%s]", line);
+// //    free(line);
+// // }
+// // free(line);
+// close(fd);
+// sleep(1000);
+//    // line = get_next_line(fd);
+//    // printf("%s", line);
+//    return 0;
+// }

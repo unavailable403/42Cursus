@@ -11,15 +11,15 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-void	*ft_memchr(const void *s, int c, size_t n)
+int ft_memchr(const char *s, int c)
 {
 	const char		*str;
 
 	str = s;
-	while (n--)
+	while (*str)
 	{
 		if (*str == (char)c)
-			return ((void *)str);
+			return (1);
 		str++;
 	}
 	return (0);
@@ -33,7 +33,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	joined_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) - 2);
+	joined_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!joined_str)
 		return (NULL);
 	while (s1 && s1[i] != '\0')
