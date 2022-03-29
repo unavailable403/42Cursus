@@ -33,7 +33,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	joined_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	joined_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) - 2);
 	if (!joined_str)
 		return (NULL);
 	while (s1 && s1[i] != '\0')
@@ -49,7 +49,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 		j++;
 		i++;
 	}
-	joined_str[j] = '\0';
+	joined_str[j] =  0;
 	free(s1);
 	return (joined_str);
 }
