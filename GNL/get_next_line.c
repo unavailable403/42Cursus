@@ -13,14 +13,14 @@ char    *ft_getline(char *buff)
     line = malloc(i + 2);
     if(!line)
         return (NULL);
-    line[i + 1] = 0;
-    line[i] = '\n';
     i = 0;
     while (buff && (buff[i] != '\n' && buff[i] != '\0'))
     {
         line[i] = buff[i];
         i++;
     }
+    line[i] = '\n';
+    line[i + 1] = 0;
     return (line);
 }
 
@@ -50,7 +50,7 @@ char    *ft_getbuff(char *buff)
         newbuff[len] = buff[j];
         j--;
     }
-    //printf("\n newbuff \n---------------------\n%s\n-----------------------------",newbuff);
+    printf("\n newbuff \n---------------------\n%s\n-----------------------------", newbuff);
     free(buff);
     return (newbuff);
 }
@@ -80,18 +80,15 @@ char    *get_next_line(int fd)
     while (flag != 0)
     {
         flag = read(fd, tmp, BUFFER_SIZE);
+        tmp[flag] = 0;
         buff = ft_strjoin(buff, tmp);
         //printf("%s", buff);
         if(ft_memchr(tmp, '\0', flag) || ft_memchr(tmp, '\n', flag))
             break;
-        tmp[flag] = 0;
     }
     line = ft_getline(buff);
     //printf("\n%s\n", buff);
-    if(flag == 0 && !buff)
-        return (line);
-    else
-        buff = ft_getbuff(buff);
+    buff = ft_getbuff(buff);
     return (line);
 }
 
@@ -103,16 +100,10 @@ int main(){
     // while ((line = get_next_line(fd)))
     //      printf("%s", line);
     line = get_next_line(fd);
-    printf("\n%s\n", line);
+    printf("%s", line);
     line = get_next_line(fd);
-    printf("\n%s\n", line);
+    printf("%s", line);
     line = get_next_line(fd);
-    printf("\n%s\n", line);
-    line = get_next_line(fd);
-    printf("\n%s\n", line);
-    line = get_next_line(fd);
-    printf("\n%s\n", line);
-    line = get_next_line(fd);
-    printf("\n%s\n", line);
+    printf("%s", line);
     return 0;
 }
