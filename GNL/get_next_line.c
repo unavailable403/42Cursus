@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ergrigor <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 00:34:02 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/03/31 00:35:48 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/01 18:51:15 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,3 +105,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	return (line);
 }
+// #include <stdio.h>
+// int	main(){
+// 	int fd = open("63_line_nl", O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	return 0;
+// }
