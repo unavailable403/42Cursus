@@ -2,6 +2,6 @@
 
 int main()
 {
-	ft_puthex(4651);
+	ft_puthex(5431, 'X');
 	return 0;
 }

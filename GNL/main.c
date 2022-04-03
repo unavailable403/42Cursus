@@ -1,9 +1,9 @@
-#include "../../../gnlOrig/get_next_line.h"
+#include <unistd.h>
 
 int main()
 {
-    int fd = open("63_line_nl", O_RDONLY);
-    printf("%s\n", get_next_line(fd));
+    char a = 'x';
+    write(1, "%c", 2);
     return 0;
 
 }
