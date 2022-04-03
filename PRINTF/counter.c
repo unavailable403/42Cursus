@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   counter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/02 22:38:45 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/03 14:16:41 by ergrigor         ###   ########.fr       */
+/*   Created: 2022/04/03 14:36:47 by ergrigor          #+#    #+#             */
+/*   Updated: 2022/04/03 15:08:54 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
-
-int	ft_putchar(char c)
+int	counter(unsigned int n)
 {
-	write(1, &c, 1);
-	return (1);
+	int	count;
+
+	count = 1;
+	while (n)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
 }
