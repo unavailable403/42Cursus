@@ -6,7 +6,7 @@
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 14:38:02 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/03 15:58:44 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:24:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ static int	puthex(unsigned long long int n)
 	char	*hex;
 	int		count;
 
-	count = counter(n);
+	count = 0;
 	hex = "abcdef";
 	if (n < 10)
-		ft_putchar(n + '0');
+		count += ft_putchar(n + '0');
 	else if (n < 16)
-		ft_putchar(hex[n - 10]);
+		count += ft_putchar(hex[n - 10]);
 	else
 	{
-		puthex(n / 16);
-		puthex(n % 16);
+		count += puthex(n / 16);
+		count += puthex(n % 16);
 	}
 	return (count);
 }
@@ -39,11 +39,11 @@ int	ft_putptr(void *x)
 	if (!x)
 	{
 		write (1, "0x0", 3);
+		return (3);
 	}
 	else
 	{
 		write (1, "0x", 2);
-		puthex(a);
+		return (puthex(a) + 2);
 	}
-	return (counter((unsigned int)x));
 }

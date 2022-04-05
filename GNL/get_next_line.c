@@ -5,110 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 00:34:02 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/01 18:51:15 by ergrigor         ###   ########.fr       */
+/*   Created: 2022/04/02 23:31:11 by ergrigor          #+#    #+#             */
+/*   Updated: 2022/04/05 23:43:37 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_getline(char *buff)
+static void	get_for_read(int fd, char *buffer, char **str)
 {
-	size_t	i;
-	char	*line;
+	int		j;
+	char	*str2;
 
-	i = 0;
-	while (buff && (buff[i] != '\n' && buff[i] != '\0'))
-		i++;
-	if (!buff || !*buff)
-		return (0);
-	line = malloc(i + 1);
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (buff[i] != '\n' && buff[i] != '\0')
+	if (!*str || !ft_strchr(*str, '\n'))
 	{
-		line[i] = buff[i];
-		++i;
+		j = read(fd, buffer, BUFFER_SIZE);
+		while (j > 0)
+		{
+			buffer[j] = 0;
+			if (!*str)
+				*str = ft_substr(buffer, 0, j);
+			else
+			{
+				str2 = *str;
+				*str = ft_strjoin(*str, buffer);
+				free(str2);
+			}
+			if (ft_strchr(buffer, '\n'))
+				break ;
+			j = read(fd, buffer, BUFFER_SIZE);
+		}
 	}
-	if (!buff[i])
-		line[i] = 0;
-	if (!buff[i])
-		return (line);
-	line[i] = '\n';
-	line[i + 1] = 0;
-	return (line);
+	free(buffer);
 }
 
-char	*ft_getbuff(char *buff)
+static char	*get_for_process(char **str)
 {
-	char	*newbuff;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
+	char	*for_substr;
+	char	*tmp_str;
 
-	i = 0;
-	if (!buff)
-		return (NULL);
-	while (buff[i] != '\n' && buff[i] != '\0')
-		i++;
-	if (!buff[i])
+	if (!ft_strchr(*str, '\n'))
 	{
-		free(buff);
-		return (NULL);
+		for_substr = ft_substr(*str, 0, ft_strlen(*str));
+		free(*str);
+		*str = 0;
+		return (for_substr);
 	}
-	newbuff = malloc(ft_strlen(buff) - i + 1);
-	if (!newbuff)
-		return (NULL);
-	++i;
-	j = 0;
-	while (buff[i])
-		newbuff[j++] = buff[i++];
-	newbuff[j] = 0;
-	free(buff);
-	return (newbuff);
-}
-
-void	norm_fix(int fd, int *flag, char **line, char **buf)
-{
-	while (1)
-	{
-		*flag = read(fd, *line, BUFFER_SIZE);
-		if (*flag <= 0)
-			break ;
-		(*line)[*flag] = 0;
-		*buf = ft_strjoin(*buf, *line);
-		if (ft_memchr(*buf, '\0') || ft_memchr(*buf, '\n'))
-			break ;
-	}
-	free(*line);
+	i = ft_strlen(*str);
+	j = ft_strlen(ft_strchr(*str, '\n'));
+	for_substr = ft_substr(*str, 0, (i - j) + 1);
+	tmp_str = *str;
+	*str = ft_substr(ft_strchr(*str, '\n'), 1, j - 1);
+	free(tmp_str);
+	return (for_substr);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buff[65536];
-	char		*line;
-	int			flag;
+	char		*buffer;
+	static char	*str;
 
-	if (fd < 0 || fd > 65536 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	line = malloc(BUFFER_SIZE + 1);
-	if (!line)
-		return (NULL);
-	norm_fix(fd, &flag, &line, &buff[fd]);
-	if (flag < 0)
-		return (NULL);
-	line = ft_getline(buff[fd]);
-	buff[fd] = ft_getbuff(buff[fd]);
-	if (!flag && !line)
-		free(buff[fd]);
-	if (!flag && !line)
-		return (NULL);
-	return (line);
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (0);
+	get_for_read(fd, buffer, &str);
+	if (!str)
+		return (0);
+	if (!*str)
+	{
+		free(str);
+		return (0);
+	}
+	return (get_for_process(&str));
 }
-// #include <stdio.h>
-// int	main(){
-// 	int fd = open("63_line_nl", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	return 0;
-// }

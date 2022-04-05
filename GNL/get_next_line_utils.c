@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ergrigor <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 00:48:35 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/03/31 00:48:37 by ergrigor         ###   ########.fr       */
+/*   Created: 2022/04/02 23:30:01 by ergrigor          #+#    #+#             */
+/*   Updated: 2022/04/05 23:42:23 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,58 @@
 
 size_t	ft_strlen(const char *str)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	if (str)
-		while (str[len])
-			len++;
-	return (len);
+	if (!str)
+		return (0);
+	i = 0;
+	while (*str++)
+		i++;
+	return (i);
 }
 
-int	ft_memchr(const char *s, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	const char		*str;
-
-	str = s;
-	while (*str)
-	{
-		if (*str == (char)c)
-			return (1);
-		str++;
-	}
-	return (0);
+	if (!c)
+		return ((char *)str + ft_strlen(str));
+	while (*str != (unsigned char)c)
+		if (!*str++)
+			return (0);
+	return ((char *)str);
 }
 
-char	*ft_strjoin(char *s1, char const *s2)
-{	
-	char	*joined_str;
+char	*ft_strjoin(const char *s1, const char *s2)
+{
 	int		i;
-	int		j;
+	size_t	len;
+	char	*str;
 
+	len = ft_strlen(s1) + ft_strlen(s2);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (0);
 	i = 0;
-	j = 0;
-	joined_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!joined_str)
-		return (NULL);
-	while (s1 && s1[i] != '\0')
-	{
-		joined_str[j] = s1[i];
-		j++;
-		i++;
-	}
+	while (*s1)
+		str[i++] = *s1++;
+	while (*s2)
+		str[i++] = *s2++;
+	str[i] = 0;
+	return (str);
+}
+
+char	*ft_substr(const char *str, unsigned int start, size_t len)
+{
+	char	*s;
+	char	*s_start;
+	size_t	i;
+
+	s = malloc(sizeof(char) * (len + 1));
+	if (!s)
+		return (0);
+	s_start = (char *)str + start;
 	i = 0;
-	while (s2 && s2[i] != '\0')
-	{
-		joined_str[j] = s2[i];
-		j++;
-		i++;
-	}
-	joined_str[j] = 0;
-	free(s1);
-	return (joined_str);
+	while (*s_start && i < len)
+		s[i++] = *s_start++;
+	s[i] = 0;
+	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 22:52:36 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/03 14:32:42 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/05 18:59:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ int	ft_putnbr(int n)
 {
 	int	count;
 
-	count = counter(n);
+	count = 0;
 	if (n < 0)
 	{
-		ft_putchar('-');
+		count += ft_putchar('-');
 		n = -n;
 	}
 	if (n == -2147483648)
 	{
-		ft_putchar('2');
+		count += ft_putchar('2');
 		n = 147483648;
 	}	
 	if (n < 10)
-		ft_putchar(n + '0');
+		count += ft_putchar(n + '0');
 	else
 	{
-		ft_putnbr(n / 10);
-		ft_putnbr(n % 10);
+		count += ft_putnbr(n / 10);
+		count += ft_putnbr(n % 10);
 	}
 	return (count);
 }

@@ -6,15 +6,13 @@
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 12:10:12 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/03 12:12:43 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:28:03 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_toupper(int c)
 {
 	if (c >= 97 && c <= 122)
-	{
 		return (c - 32);
-	}
 	return (c);
 }
