@@ -6,11 +6,11 @@
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 22:52:36 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/05 18:59:12 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:54:08 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_putnbr(int n)
 {

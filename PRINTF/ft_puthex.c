@@ -6,11 +6,11 @@
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 23:14:09 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/05 20:39:38 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:54:08 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_puthex(unsigned int n, char x)
 {	

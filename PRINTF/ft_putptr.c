@@ -6,11 +6,11 @@
 /*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 14:38:02 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/04/05 19:24:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:54:08 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 static int	puthex(unsigned long long int n)
 {	
