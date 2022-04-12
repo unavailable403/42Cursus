@@ -1,0 +1,15 @@
+#!/bin/bash
+
+total_mb=`free -m | awk 'NR == 2 {printf $2}'`
+used_mb=`free -m | awk 'NR == 2 {printf $3}'`
+mem_prescentage=`free -t | awk 'NR == 2 {printf("%.2f%"), $3/$2*100}'`
+
+du_used=`df -Tm 2>/dev/null | grep "ext*" | awk '{printf $4}'`
+du_total=`df -Th 2>/dev/null | grep "ext*" | awk '{printf $3}'`
+du_prescentage=`df -Tm 2>/dev/null | grep "ext*" |  awk '{printf("%.2f%"), $4/$3*100}'`
+
+echo "#Architecture: `uname -a`"
+echo "#CPU physical: `cat /proc/cpuinfo | grep -i processor | wc -l`"
+echo "#vCPU: `cat /proc/cpuinfo | grep -i virtual | wc -l`"
+echo "#Memory Usage: ${used_mb}MB/${total_mb}MB ($mem_prescentage)"
+echo "#Disk Usage: ${du_used}MB/${du_total}B ($du_prescentage)"
